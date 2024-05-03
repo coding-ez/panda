@@ -1,0 +1,31 @@
+
+    1)
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+2)data = pd.read_csv('titanic.csv')
+data
+
+3)data.head(5)
+4)data.info()
+
+ 5)data.isna().sum().sum()
+
+ 6)data.isnull().sum()
+
+7)sns.countplot(x ='Survived', data = data)
+
+ 
+8)sns.countplot(data=data, x='Sex', hue= 'Survived')
+
+9) sns.heatmap(data.corr(), annot= True, cmap= 'coolwarm', linewidths = 1, linecolor = 'black');
+
+10)sns.regplot(data=data,x='Pclass',y='Fare')
+
+11)sns.histplot(data,x="Fare",bins=15,binwidth=20)
+
+
+12)sns.histplot(data = data, x = 'Fare', hue = 'Survived',kde = True);
+

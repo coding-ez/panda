@@ -1,0 +1,26 @@
+[41]: import pandas as pd
+
+[42]: df=pd.read_csv("Iris.csv")
+
+[43]: df.head(2)
+
+[44]: df.info()
+
+[45]: df.describe()
+
+[46]: df.shape
+
+[47]: df.dtypes
+
+[48]: # Filter data for each species
+setosa_data = df[df['Species'] == 'Iris-setosa']
+versicolor_data = df[df['Species'] == 'Iris-versicolor']
+virginica_data = df[df['Species'] == 'Iris-virginica']
+
+print("Statistics for Iris-setosa:")
+print(setosa_data.describe())
+print("\nStatistics for Iris-versicolor:")
+print(versicolor_data.describe())
+print("\nStatistics for Iris-virginica:")
+print(virginica_data.describe())
+

@@ -1,0 +1,78 @@
+[27]: 
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+
+[28]: df=pd.read_csv("academic_per.csv")
+
+[29]: df.head(2)
+
+[30]: df.info()
+
+[31]: df.describe()
+
+[32]: df.shape
+
+[33]: df.dtypes
+
+[34]:
+def plot_histogram_and_boxplot(data, column_name, title_suffix):
+	plt.figure(figsize=(12, 6))
+	plt.subplot(1, 2, 1)
+	plt.hist(data[column_name], bins=20)
+	plt.title(f'Histogram {title_suffix}')
+	plt.xlabel('Values')
+	plt.ylabel('Frequency')
+	plt.subplot(1, 2, 2)
+	sns.boxplot(y=data[column_name],
+		flierprops=dict(marker='o', markerfacecolor='lightblue',␣
+          ↪markersize=10))
+	plt.title(f'Boxplot {title_suffix}')
+	plt.xlabel('Values')
+	plt.tight_layout()
+	plt.show()
+def remove_outliers_iqr(data, column_name):
+	Q1 = data[column_name].quantile(0.25)
+	Q3 = data[column_name].quantile(0.75)
+	IQR = Q3 - Q1
+	lower_bound = Q1 - 1.5 * IQR
+	upper_bound = Q3 + 1.5 * IQR
+	return data[(data[column_name] >= lower_bound) & (data[column_name] <=␣
+          ↪upper_bound)]
+
+plot_histogram_and_boxplot(df, 'BMI', 'Before Outlier Filtering')
+
+df_filtered = remove_outliers_iqr(df, 'BMI')
+
+plot_histogram_and_boxplot(df_filtered, 'BMI', 'After Outlier Filtering')
+
+
+[35]: # skewness
+original_skewness = df_filtered['BMI'].skew()
+print("Original skewness of 'BMI' variable:", original_skewness)
+Original skewness of 'BMI' variable: 0.2545074516989331
+
+[36]: # Plot
+plt.figure(figsize=(10, 6))
+sns.histplot(df_filtered['BMI'], kde=True, color='skyblue')
+plt.title('Distribution of BMI (Original)')
+plt.xlabel('BMI')
+plt.ylabel('Frequency')
+plt.show()
+
+[45]: # square root transformation
+df_filtered.loc['BMI_sqrt'] = np.sqrt(df_filtered['BMI'])
+
+transformed_skewness = df_filtered['BMI_sqrt'].skew()
+print(f"Skewness of 'BMI' variable after square root transformation:␣
+     ↪{transformed_skewness}\n\n" )
+
+[46]: # Plot
+plt.figure(figsize=(10, 6))
+sns.histplot(df_filtered['BMI_sqrt'], kde=True, color='skyblue')
+plt.title('Distribution of BMI (Square Root Transformed)')
+plt.xlabel('Square Root(BMI)')
+plt.ylabel('Frequency')
+plt.show()
+

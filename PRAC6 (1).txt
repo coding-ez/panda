@@ -1,0 +1,41 @@
+
+
+1)
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
+import warnings
+warnings.filterwarnings('ignore')
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import confusion_matrix, classification_report
+
+2)
+iris = load_iris()
+data = pd.DataFrame(iris.data, columns=iris.feature_names)
+data['target'] = iris.target
+data.head()
+
+3)data.sample(5) 
+
+4)set(iris.target), iris.target_names
+
+5)
+X_train, X_test, y_train, y_test = train_test_split(data.drop('target', axis=1), data['target'], test_size=0.2, random_state=42)
+
+6)
+model = GaussianNB()
+model.fit(X_train, y_train)
+
+  
+7)
+y_pred = model.predict(X_test)
+y_pred
+
+8)sns.heatmap(confusion_matrix(y_test, y_pred), annot = True);
+9)print(classification_report(y_test, y_pred))
+
+                  

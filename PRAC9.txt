@@ -1,0 +1,28 @@
+
+    1
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt 
+
+2)data = pd.read_csv('titanic.csv')
+data.sample(5)
+
+3)data.isna().sum()
+
+4)sns.heatmap(data.corr(), annot = True);
+
+5)age_null_mask = data['Age'].isnull()
+age_mean = data['Age'].mean()
+age_std = data['Age'].std()
+age_random = np.random.normal(loc=age_mean, scale=age_std, size=age_null_mask.sum())
+data.loc[age_null_mask, 'Age'] = age_random
+
+6)age_random.size
+
+7)data.isna().sum()
+
+8)data.sample(7)
+
+9)sns.boxplot(x='Sex', y='Age', hue='Survived', data=data);
+
